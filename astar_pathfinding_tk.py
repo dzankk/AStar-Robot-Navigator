@@ -53,7 +53,7 @@ WEIGHT_STIPPLE = "gray35"
 # Theme colors - gets overridden when you switch themes
 THEME_CONFIG = {
     "rabbit": {
-        "name": " Rabbit Hunt",
+        "name": "Carrot Hunt",
         "canvas_bg": "#B8D4E8",         # Medium light cyan-blue (clearly not white)
         "grid_line": "#7CB0C8",         # Medium blue-grey
         "obstacle": "#2C3E50",          # Dark navy
@@ -63,7 +63,7 @@ THEME_CONFIG = {
         "accent": "#90EE90"             # Light green
     },
     "space": {
-        "name": " Space Logistics",
+        "name": "space",
         "canvas_bg": "#000000",         # Pure black
         "grid_line": "#1E2A3A",         # Dark grey-blue
         "obstacle": "#2C3E50",          # Navy grey
@@ -73,7 +73,7 @@ THEME_CONFIG = {
         "accent": "#4169E1"             # Royal blue
     },
     "escape": {
-        "name": " Dungeon Escape",
+        "name": "Dungeon Escape",
         "canvas_bg": "#7a6a5a",         # Lighter brown-grey for visibility
         "grid_line": "#3a3a3a",         # Dark grey grid lines
         "obstacle": "#2c2c2c",          # Dark obstacles (will be visible)
@@ -85,7 +85,7 @@ THEME_CONFIG = {
 }
 
 # Maze generation using recursive backtracking
-# Makes corridors wide enough for the robot to fit no matter how fat itis
+# Makes corridors wide enough for the robot to fit
 def generate_maze(grid, robot_size=1, preserve_nodes=None):
     if preserve_nodes is None:
         preserve_nodes = set()
@@ -404,7 +404,7 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
                     break
 
         if goal_reached:
-            path_length, path_nodes = reconstruct_path(came_from, end, canvas, grid, robot_size=robot_size)
+            path_length, path_nodes = reconstruct_path(came_from, current, canvas, grid, robot_size=robot_size)
             end.make_end()
             start.make_start()
             if not fog_of_war_enabled:
@@ -775,7 +775,7 @@ class AStar_App:
         title_frame = ctk.CTkFrame(side_panel, fg_color="transparent")
         title_frame.pack(pady=(10, 5), padx=15, fill=tk.X)
         
-        ctk.CTkLabel(title_frame, text="🤖 Path Planning A*", 
+        ctk.CTkLabel(title_frame, text="Path Planning A*", 
                     font=ctk.CTkFont(size=20, weight="bold"),
                     text_color="#00d4ff").pack()
         
@@ -828,9 +828,9 @@ class AStar_App:
                     text_color="#e0e0e0").pack(pady=(5, 2), padx=10, anchor="w")
 
         themes = [
-            ("rabbit", "1️⃣ Point Hunt", "#27ae60"),
-            ("space", "2️⃣ Logistics", "#3498db"),
-            ("escape", "3️⃣ Dungeon", "#e74c3c")
+            ("rabbit", "1 Carrot Hunt", "#27ae60"),
+            ("space", "2 Space", "#3498db"),
+            ("escape", "3 Dungeon", "#e74c3c")
         ]
 
         for theme_key, text, color in themes:
@@ -852,12 +852,12 @@ class AStar_App:
         button_row = ctk.CTkFrame(environment_frame, fg_color="transparent")
         button_row.pack(padx=10, fill=tk.X, pady=(0, 10))
 
-        ctk.CTkButton(button_row, text="🎲 Random", height=35, width=130,
+        ctk.CTkButton(button_row, text="Random", height=35, width=130,
                      command=self.generate_obstacles,
                      fg_color="#E67E22", hover_color="#d35400", corner_radius=8,
                      font=ctk.CTkFont(size=10, weight="bold")).pack(side=tk.LEFT, padx=3)
 
-        ctk.CTkButton(button_row, text="🌀 Maze", height=35, width=130,
+        ctk.CTkButton(button_row, text="Maze", height=35, width=130,
                      command=self.generate_maze_structure,
                      fg_color="#9B59B6", hover_color="#8E44AD", corner_radius=8,
                      font=ctk.CTkFont(size=10, weight="bold")).pack(side=tk.LEFT, padx=3)
@@ -865,7 +865,7 @@ class AStar_App:
         # Random weights button
         button_row2 = ctk.CTkFrame(environment_frame, fg_color="transparent")
         button_row2.pack(padx=10, fill=tk.X, pady=(5, 10))
-        ctk.CTkButton(button_row2, text="⚡ Random Weights", height=35, width=270,
+        ctk.CTkButton(button_row2, text="Random Weights", height=35, width=270,
                      command=self.generate_random_weights,
                      fg_color="#c44569", hover_color="#e55983", corner_radius=8,
                      font=ctk.CTkFont(size=10, weight="bold")).pack()
@@ -903,17 +903,17 @@ class AStar_App:
                     font=ctk.CTkFont(size=12, weight="bold"),
                     text_color="#00d4ff").pack(pady=(10, 5), padx=10, anchor="w")
         
-        ctk.CTkButton(algo_frame, text="▶ A* (4-directions)", height=35,
+        ctk.CTkButton(algo_frame, text="A* (4-directions)", height=35,
                      command=lambda: self.run_algorithm(diagonal=False),
                      fg_color="#2ECC71", hover_color="#27ae60", corner_radius=8,
                      font=ctk.CTkFont(size=11, weight="bold")).pack(pady=3, padx=10, fill=tk.X)
         
-        ctk.CTkButton(algo_frame, text="▶ A* (Diagonal)", height=35,
+        ctk.CTkButton(algo_frame, text="A* (Diagonal)", height=35,
                      command=lambda: self.run_algorithm(diagonal=True),
                      fg_color="#1ABC9C", hover_color="#16a085", corner_radius=8,
                      font=ctk.CTkFont(size=11, weight="bold")).pack(pady=3, padx=10, fill=tk.X)
         
-        ctk.CTkButton(algo_frame, text="🗑 Clear Grid", height=35,
+        ctk.CTkButton(algo_frame, text="Clear Grid", height=35,
                      command=self.clear_grid,
                      fg_color="#E74C3C", hover_color="#c0392b", corner_radius=8,
                      font=ctk.CTkFont(size=11, weight="bold")).pack(pady=(3, 10), padx=10, fill=tk.X)
@@ -1311,6 +1311,18 @@ class AStar_App:
         if not self.start or not self.end:
             print("Please set start and end points first!")
             return
+
+        protected = set()
+        for dr in range(self.robot_size):
+            for dc in range(self.robot_size):
+                sr = self.start.row + dr
+                sc = self.start.col + dc
+                er = self.end.row + dr
+                ec = self.end.col + dc
+                if 0 <= sr < ROWS and 0 <= sc < ROWS:
+                    protected.add((sr, sc))
+                if 0 <= er < ROWS and 0 <= ec < ROWS:
+                    protected.add((er, ec))
         
         density = self.density_var.get()
         max_attempts = 5
@@ -1321,6 +1333,10 @@ class AStar_App:
             # Reset grid
             for row in self.grid:
                 for node in row:
+                    if (node.row, node.col) in protected:
+                        if node != self.start and node != self.end:
+                            node.reset()
+                        continue
                     if node != self.start and node != self.end:
                         if random.randint(1, 100) <= current_density:
                             node.make_barrier()
@@ -1429,7 +1445,7 @@ class AStar_App:
             for node in row:
                 node.update_neighbors(self.grid, allow_diagonal=self.allow_diagonal, robot_size=self.robot_size)
         
-        print(f"✓ Maze generated - corridors sized for {self.robot_size}×{self.robot_size} robot")
+        print(f"Maze generated - corridors sized for {self.robot_size}×{self.robot_size} robot")
         self.redraw()
     
     def generate_random_weights(self):
@@ -1459,9 +1475,9 @@ class AStar_App:
             for node in weight_cells:
                 node.make_weight(WEIGHT_VALUE)
             
-            print(f"✓ Added {len(weight_cells)} weighted terrain cells ({weight_density}% density)")
+            print(f"Added {len(weight_cells)} weighted terrain cells ({weight_density}% density)")
         else:
-            print("⚠ No empty cells available for weighted terrain")
+            print("No empty cells available for weighted terrain")
         
         self.redraw()
     
@@ -1485,7 +1501,7 @@ class AStar_App:
         
         if self.animation_index >= len(self.path_nodes):
             # Animation complete - restore the start node
-            print("✓ Robot animation complete!")
+            print("Robot animation complete!")
             if self.start:
                 self.start.make_start()
             self.redraw()
@@ -1660,8 +1676,8 @@ class AStar_App:
         theme_colors = THEME_CONFIG.get(theme_key, THEME_CONFIG["rabbit"])
         
         print(f"\n{'='*50}")
-        print(f"🎯 SWITCHING TO: {theme.name}")
-        print(f"📝 {theme.description}")
+        print(f"SWITCHING TO: {theme.name}")
+        print(f"{theme.description}")
         print(f"{'='*50}")
         
         # Apply theme-specific algorithm parameters
@@ -1697,11 +1713,11 @@ class AStar_App:
                     # Weights remain but will be drawn with new theme color
                     pass
         
-        print(f"⚙️  Algorithm Config:")
+        print(f"Algorithm Config:")
         print(f"   - Robot Size: {theme.robot_size}×{theme.robot_size}")
         print(f"   - Weights Enabled: {theme.allow_weights}")
         print(f"   - Weight Cost: {theme.weight_value}×")
-        print(f"🎨 Visual Config:")
+        print(f"Visual Config:")
         print(f"   - Background: {theme_colors['canvas_bg']}")
         print(f"   - Grid Lines: {theme_colors['grid_line']}")
         print(f"   - Obstacles: {theme_colors['obstacle']}")
@@ -1724,28 +1740,28 @@ class AStar_App:
             self.robot_image = robot_img
             self.robot_photo = ImageTk.PhotoImage(robot_img)
             self.use_custom_robot = True
-            print(f"✓ Robot image loaded")
+            print(f"Robot image loaded")
         else:
             self.use_custom_robot = False
-            print(f"⚠ Using default robot graphics")
+            print(f"Using default robot graphics")
         
         if obstacle_img:
             self.obstacle_image = obstacle_img
             self.obstacle_photo = ImageTk.PhotoImage(obstacle_img)
             self.use_custom_obstacle = True
-            print(f"✓ Obstacle image loaded")
+            print(f"Obstacle image loaded")
         else:
             self.use_custom_obstacle = False
-            print(f"⚠ Using default obstacle graphics")
+            print(f"Using default obstacle graphics")
         
         if goal_img:
             self.goal_image = goal_img
             self.goal_photo = ImageTk.PhotoImage(goal_img)
             self.use_custom_goal = True
-            print(f"✓ Goal image loaded")
+            print(f"Goal image loaded")
         else:
             self.use_custom_goal = False
-            print(f"⚠ Using default goal graphics")
+            print(f"Using default goal graphics")
         
         print(f"{'='*50}\n")
         
