@@ -108,8 +108,6 @@ PathPlanning_Projekat/
 ├── theme_manager.py                 # Theme configuration
 ├── README.md                         # This file
 ├── ATTRIBUTION.md                   # Icon credits & licenses
-├── FINAL_SUBMISSION_CHECK.md        # Complete requirement verification
-├── REQUIREMENTS_VERIFICATION.md     # Detailed requirement checklist
 └── themes/                          # Visual theme assets
     ├── rabbit/                      # Cute rabbit theme 
     │   ├── robot.png
@@ -257,4 +255,5 @@ This project demonstrates:
 - **Mentorship:** Doc. dr. Sead Delalić 
 - **Framework:** CustomTkinter (Modern UI for Python)
 - **Assets:** Icons from Flaticon & PNGtree
+
 
