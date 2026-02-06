@@ -1,32 +1,32 @@
 # A* Pathfinding - Path Planning with Random Obstacles
 
-A complete, professional A* pathfinding application with two robot movement models (point and square), real-time visualization, performance metrics, and theme support.
-
-**Status:** ✅ Ready for submission | **Grade Estimate:** 95-100/100
+A comprehensive A* pathfinding application featuring two robot movement models (point and square), real-time visualization, performance metrics, and dynamic theme support.
 
 ---
 
 ## 🎯 Features
 
-### Core Requirements (All Implemented ✅)
-- ✅ **Explored Area Visualization** - Real-time green (open) and red (closed) cells
-- ✅ **Final Path Display** - Theme-colored paths with full robot footprint
-- ✅ **Performance Metrics** - 9 metrics including ADS2 efficiency score
-- ✅ **Two Movement Models** - Point robot (1×1) + Square robot (2×2, 3×3) with footprint checks
-- ✅ **Model Switching** - Buttons to switch between robot sizes
-- ✅ **Regenerate Obstacles** - Random generation, maze generation, and clear grid
-- ✅ **Run Planner** - A* with 4-directional and diagonal movement
-- ✅ **Compare Routes** - Side-by-side comparison table with smart color coding
+### Core Requirements
+- **Explored Area Visualization** - Real-time visualization of open (green) and closed (red) nodes.
+- **Final Path Display** - Path visualization adjusted for the specific robot footprint.
+- **Performance Metrics** - Comprehensive tracking of search time, path cost, and exploration efficiency.
+- **2+ Movement Models** - Support for Point robot (1×1) and Square robot (2×2, 3×3) with footprint validation.
+- **Dynamic Obstacles** - Tools for random obstacle generation and manual grid editing.
+- **Model Switching** - Buttons to switch between robot sizes
+- **Regenerate Obstacles** - Random generation, maze generation, and clear grid
+- **Run Planner** - A* with 4-directional and diagonal movement
+- **Comparison Table** - Side-by-side analysis of different runs to evaluate algorithm performance.
 
-### Bonus Features 🎁
-- 🎨 **Three Visual Themes** - Carrot Hunt, Dungeon Escape, and Obstacle Course with custom robot icons
-- 🎭 **Weighted Terrain** - Add high-cost areas (5× cost) using Ctrl+Drag or brush tool
-- 🤖 **Robot Animation** - Smooth step-by-step movement along the final path
-- 📊 **Live Node Information** - Hover over cells to see g(n), h(n), f(n), and weight values
-- 🏰 **Maze Generation** - Procedural maze creation using recursive backtracker
-- ⚡ **Search Effectiveness Score** - Composite metric combining exploration efficiency, time, and optimality
+### Additional Functionality
+- **Three Visual Themes** - Carrot Hunt, Dungeon Escape, and Obstacle Course with custom robot icons
+- **Weighted Terrain** - Add high-cost areas (5× cost) using Ctrl+Drag or brush tool
+- **Robot Animation** - Smooth step-by-step movement along the final path
+- **Live Node Information** - Hover over cells to see g(n), h(n), f(n), and weight values
+- **Maze Generation** - Procedural maze creation using recursive backtracker
+- **Search Effectiveness Score** - Composite metric combining exploration efficiency, time, and optimality
 
 ---
+
 
 ## 🚀 Quick Start
 
@@ -111,15 +111,15 @@ PathPlanning_Projekat/
 ├── FINAL_SUBMISSION_CHECK.md        # Complete requirement verification
 ├── REQUIREMENTS_VERIFICATION.md     # Detailed requirement checklist
 └── themes/                          # Visual theme assets
-    ├── rabbit/                      # Cute rabbit theme 🐰
+    ├── rabbit/                      # Cute rabbit theme 
     │   ├── robot.png
     │   ├── obstacle.png
     │   └── goal.png
-    ├── space/                       # Spaceship theme 🚀
+    ├── space/                       # Spaceship theme 
     │   ├── robot.png
     │   ├── obstacle.png
     │   └── goal.png
-    └── escape/                      # Dungeon escape theme 🔐
+    └── escape/                      # Dungeon escape theme 
         ├── robot.png
         ├── obstacle.png
         └── goal.png
@@ -127,32 +127,37 @@ PathPlanning_Projekat/
 
 ---
 
-## 🎨 Themes
+##  Themes
 
-### Rabbit Theme 🐰
-- **Background:** Light and cheerful
-- **Robot:** Cute rabbit
-- **Style:** Children's game aesthetic
-- **Activate:** Press `1` or click theme button
+Rabbit Theme 🐰: Designed for simple grid visualization.
 
-### Space Theme 🚀
-- **Background:** Dark space with stars
-- **Robot:** Spaceship
-- **Style:** Sci-fi exploration
-- **Activate:** Press `2` or click theme button
+    Robot: Pixel Rabbit sprite.
 
-### Escape Theme 🔐 (Dungeon)
-- **Background:** Dark dungeon
-- **Robot:** Escapee character
-- **Goal:** Prison door exit
-- **Special:** High-cost zones (guard patrols) - robots avoid these zones
-- **Activate:** Press `3` or click theme button
+    Goal: Carrot.
+
+    Obstacles: Shrubs.
+
+Space Theme 🚀: High-contrast mode for clear path visibility.
+
+    Robot: Spaceship.
+
+    Goal: SThe earth.
+
+    Obstacles: Asteroids.
+
+Dungeon Escape 🔐: Focuses on weighted terrain visualization.
+
+    Robot: Prisoner/Escapee.
+
+    Goal: Exit Door.
+
+    Obstacles: Prison bars.
 
 ---
 
 ## 📊 Performance Metrics Explained
 
-### ADS2 Efficiency Formula
+###  Efficiency Formula
 ```
 Efficiency% = ((Total_Walkable_Cells - Nodes_Explored) / Total_Walkable_Cells) × 100
 ```
@@ -167,7 +172,7 @@ Efficiency% = ((Total_Walkable_Cells - Nodes_Explored) / Total_Walkable_Cells) �
 
 ---
 
-## ⚖️ Weighted Terrain System
+##  Weighted Terrain System
 
 ### How It Works
 - **Normal terrain:** Cost = 1 (or √2 for diagonal)
@@ -184,7 +189,7 @@ Efficiency% = ((Total_Walkable_Cells - Nodes_Explored) / Total_Walkable_Cells) �
 2. Creates weighted terrain cells automatically
 
 **Method 3: Random Weights**
-1. Click "⚡ Random Weights" button
+1. Click " Random Weights" button
 2. Automatically adds 10-20% weighted terrain
 
 ### Visual Indicator
@@ -192,18 +197,6 @@ Efficiency% = ((Total_Walkable_Cells - Nodes_Explored) / Total_Walkable_Cells) �
 - Shows which cells have high cost
 - Path will show increased length when traversing these cells
 
----
-
-## 🏆 Assignment Compliance
-
-This project fulfills **all 11 core requirements** plus bonus features:
-
-**Requirement 1-8:** ✅ All implemented and verified  
-**Bonus Features:** ✅ Weighted terrain, themes, fog of war, animation  
-**Code Quality:** ✅ Modular, well-documented, no known bugs  
-**Grade Estimate:** ⭐⭐⭐⭐⭐ (95-100/100)
-
-For detailed verification, see [FINAL_SUBMISSION_CHECK.md](FINAL_SUBMISSION_CHECK.md)
 
 ---
 
@@ -214,30 +207,6 @@ This project uses free icons from **Flaticon.com** and **PNGtree.com**.
 All icons are properly licensed for educational and commercial use.
 
 **See [ATTRIBUTION.md](ATTRIBUTION.md) for detailed credits and license information.**
-
----
-
-## 💾 How to Submit
-
-1. **Code Files:**
-   - `astar_pathfinding_tk.py` (main application)
-   - `theme_manager.py` (configuration)
-   - `themes/` folder (all assets)
-
-2. **Documentation:**
-   - This README.md
-   - ATTRIBUTION.md (credits)
-   - FINAL_SUBMISSION_CHECK.md (verification)
-   - REQUIREMENTS_VERIFICATION.md (detailed checklist)
-
-3. **Video Demo:**
-   - 2-3 minute demo showing all features
-   - Upload to YouTube (unlisted link)
-
-4. **Seminar Paper:**
-   - IEEE two-column format
-   - 2-3 pages
-   - Abstract, introduction, methodology, results, conclusion
 
 ---
 
@@ -257,21 +226,10 @@ pip install customtkinter Pillow
 ### Pathfinding Too Slow
 - Reduce grid size or obstacle density
 - Try 4-directional movement (faster than diagonal)
-- Disable fog of war visualization
 
 ---
 
-## 📚 Documentation
-
-- **[FINAL_SUBMISSION_CHECK.md](FINAL_SUBMISSION_CHECK.md)** - Complete verification of all requirements
-- **[REQUIREMENTS_VERIFICATION.md](REQUIREMENTS_VERIFICATION.md)** - Detailed requirement checklist
-- **[TECHNICAL_AUDIT.md](TECHNICAL_AUDIT.md)** - Algorithm correctness verification
-- **[ATTRIBUTION.md](ATTRIBUTION.md)** - Icon credits and licenses
-- **[SUBMISSION_GUIDE.md](SUBMISSION_GUIDE.md)** - How to prepare and submit
-
----
-
-## 🎓 Learning Resources
+##  Learning Resources
 
 This project demonstrates:
 - **Algorithm:** A* pathfinding with heuristic search
@@ -288,30 +246,15 @@ This project demonstrates:
 
 ---
 
-## 🙏 Credits
 
-**Development:** A* Pathfinding Application  
-**Framework:** CustomTkinter (Modern tkinter)  
-**Icons:** Flaticon.com & PNGtree.com (Free assets)  
-**Course:** Algorithms and Data Structures for AI  
-**University:** Faculty of Science and Engineering
+##  Author
+**Student:** Džana Kopić 
+**Index:** 20165 
+**Course:** Algorithms and Data Structures II (ADS2)  
+**Institution:** Faculty of Electrical Engineering (ETF Sarajevo)
 
----
+##  Acknowledgments
+- **Mentorship:** Doc. dr. Sead Delalić 
+- **Framework:** CustomTkinter (Modern UI for Python)
+- **Assets:** Icons from Flaticon & PNGtree
 
-## 📄 License
-
-This project is provided for educational purposes.
-
-Icons used are licensed under Creative Commons and free usage terms from:
-- **Flaticon:** https://www.flaticon.com/
-- **PNGtree:** https://pngtree.com/
-
----
-
-## 🚀 Ready to Submit!
-
-Your application is complete and exceeds all assignment requirements.
-
-**Status:** ✅ 100% Ready | **Confidence:** 95-100/100
-
-Good luck with your defense! 🎯
