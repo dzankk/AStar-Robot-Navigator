@@ -1,15 +1,5 @@
-"""
-A* Pathfinding Application with Theme System
-==============================================
-Professional GUI for A* pathfinding with multiple movement models,
-weighted terrain, and theme-driven visualization.
-
-Main Components:
-- grid_node.py: Node class and grid management
-- pathfinding.py: A* algorithm implementation
-- theme_manager.py: Theme configuration system
-- astar_pathfinding_tk.py: GUI and application logic (this file)
-"""
+# A* Pathfinding with themes and robot movement
+# Uses customtkinter for GUI and PIL for images
 
 import tkinter as tk
 from tkinter import ttk, filedialog
@@ -60,13 +50,10 @@ WEIGHT_COLOR = "#E74C3C"
 WEIGHT_VALUE = 5
 WEIGHT_STIPPLE = "gray35"
 
-
-# ============================================================================
-# AESTHETIC THEME CONFIGURATION
-# ============================================================================
+# Theme colors - gets overridden when you switch themes
 THEME_CONFIG = {
     "rabbit": {
-        "name": "🐰 Rabbit Hunt",
+        "name": " Rabbit Hunt",
         "canvas_bg": "#B8D4E8",         # Medium light cyan-blue (clearly not white)
         "grid_line": "#7CB0C8",         # Medium blue-grey
         "obstacle": "#2C3E50",          # Dark navy
@@ -76,7 +63,7 @@ THEME_CONFIG = {
         "accent": "#90EE90"             # Light green
     },
     "space": {
-        "name": "🚀 Space Logistics",
+        "name": " Space Logistics",
         "canvas_bg": "#000000",         # Pure black
         "grid_line": "#1E2A3A",         # Dark grey-blue
         "obstacle": "#2C3E50",          # Navy grey
@@ -86,7 +73,7 @@ THEME_CONFIG = {
         "accent": "#4169E1"             # Royal blue
     },
     "escape": {
-        "name": "🏰 Dungeon Escape",
+        "name": " Dungeon Escape",
         "canvas_bg": "#7a6a5a",         # Lighter brown-grey for visibility
         "grid_line": "#3a3a3a",         # Dark grey grid lines
         "obstacle": "#2c2c2c",          # Dark obstacles (will be visible)
@@ -97,20 +84,9 @@ THEME_CONFIG = {
     }
 }
 
-
-# ============================================================================
-# MAZE GENERATION - Recursive Backtracking Algorithm
-# ============================================================================
+# Maze generation using recursive backtracking
+# Makes corridors wide enough for the robot to fit no matter how fat itis
 def generate_maze(grid, robot_size=1, preserve_nodes=None):
-    """
-    Generate a perfect maze using Recursive Backtracking.
-    Corridor width ensures the robot can navigate through.
-    
-    Args:
-        grid: 2D list of Node objects
-        robot_size: Robot footprint (1, 2, or 3) - determines corridor width
-        preserve_nodes: Set of (row, col) tuples to preserve (start/end points)
-    """
     if preserve_nodes is None:
         preserve_nodes = set()
     
@@ -178,8 +154,7 @@ def generate_maze(grid, robot_size=1, preserve_nodes=None):
 
 
 class Node:
-    """Represents a single node in the grid"""
-    
+    # Each cell in the grid
     def __init__(self, row, col, total_rows):
         self.row = row
         self.col = col
@@ -245,11 +220,11 @@ class Node:
         self.color = WEIGHT_COLOR
     
     def can_fit_robot(self, grid, robot_size):
-        """Check if an NxN square robot can fit at this position without hitting barriers"""
+        # Check if robot footprint fits here without hitting walls
         if robot_size == 1:
             return not self.is_barrier()
         
-        # Check ALL cells in robot footprint (including boundaries)
+        # for bigger robots, check all cells they occupy
         for dr in range(robot_size):
             for dc in range(robot_size):
                 check_row = self.row + dr
@@ -266,7 +241,7 @@ class Node:
         return True
     
     def update_neighbors(self, grid, allow_diagonal=False, robot_size=1):
-        """Update list of valid neighbors"""
+        # find all neighbors this node can move to
         self.neighbors = []
         
         # Down
@@ -311,21 +286,21 @@ class Node:
 
 
 def h(p1, p2):
-    """Manhattan distance heuristic"""
+    # manhattan distance heuristic for A*
     x1, y1 = p1
     x2, y2 = p2
     return abs(x1 - x2) + abs(y1 - y2)
 
 
 def reconstruct_path(came_from, current, canvas, grid, robot_size=1):
-    """Reconstruct and visualize the final path, return both length and path list"""
+    # trace back the path from goal to start
     path_nodes = []
     path_length = 0
     temp_current = current
     while temp_current in came_from:
         temp_current = came_from[temp_current]
         path_nodes.append(temp_current)
-        # Mark full robot footprint as path
+        # draw full robot footprint as path
         for dr in range(robot_size):
             for dc in range(robot_size):
                 r = temp_current.row + dr
@@ -333,9 +308,9 @@ def reconstruct_path(came_from, current, canvas, grid, robot_size=1):
                 if 0 <= r < len(grid) and 0 <= c < len(grid[0]):
                     node = grid[r][c]
                     if not node.is_start() and not node.is_end() and not node.is_barrier():
-                        # Preserve weighted terrain visual (darker shade of path color)
+                        # keep weighted terrain visible with darker shade
                         if node.is_weight():
-                            node.color = "#149873"  # Darker green for weighted path
+                            node.color = "#149873"  # darker green
                         else:
                             node.make_path()
                         draw_node(canvas, node)
@@ -350,7 +325,7 @@ def reconstruct_path(came_from, current, canvas, grid, robot_size=1):
 def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
               draw_callback=None, fog_of_war_enabled=False, fog_of_war_visible=None,
               fog_radius=0):
-    """A* pathfinding algorithm implementation with metrics and optional fog-of-war."""
+    # Main A* algorithm - returns metrics dict
     start_time = time.perf_counter()
     count = 0
     nodes_explored = 0
@@ -371,7 +346,7 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
     closed_set = set()
     max_open_size = 1
     
-    # Calculate total walkable nodes for ADS2 efficiency metric
+    # count walkable cells for efficiency calculation
     total_walkable = sum(1 for row in grid for node in row if not node.is_barrier())
 
     def reveal_fog(center_node):
@@ -397,11 +372,13 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
     while open_heap:
         max_open_size = max(max_open_size, len(open_set_hash))
         current = heapq.heappop(open_heap)[2]
+        # print(f"Current node: ({current.row}, {current.col})")  # debug
         if current not in open_set_hash:
             continue
 
         open_set_hash.remove(current)
         nodes_explored += 1
+        # print(f"Nodes explored: {nodes_explored}")  # for testing
         closed_set.add(current)
 
         reveal_fog(current)
@@ -435,11 +412,12 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
                 draw_node(canvas, start)
             elapsed_time = time.perf_counter() - start_time
             
-            # ADS2 Search Effectiveness Score (composite metric)
-            # Factors: nodes explored efficiency, path quality, time efficiency
+            # calculate search effectiveness - combines exploration, time, and path quality
+            # this formula took forever to get right lol
             exploration_efficiency = ((total_walkable - nodes_explored) / total_walkable) if total_walkable > 0 else 0
-            time_factor = max(0.5, min(1.0, 1.0 / (elapsed_time * 1000 + 1)))  # Normalized time efficiency
-            optimality = max(0.5, min(1.0, total_walkable / (nodes_explored + 1)))  # Path optimality
+            time_factor = max(0.5, min(1.0, 1.0 / (elapsed_time * 1000 + 1)))
+            optimality = max(0.5, min(1.0, total_walkable / (nodes_explored + 1)))
+            # print(f"Exploration: {exploration_efficiency}, Time: {time_factor}, Opt: {optimality}")  # debug
             search_effectiveness_score = (exploration_efficiency * 40 + time_factor * 30 + optimality * 30)
 
             metrics = {
@@ -449,14 +427,15 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
                 'max_open_size': max_open_size,
                 'time': elapsed_time,
                 'space_complexity': len(closed_set),
-                'search_efficiency': search_effectiveness_score,  # Now a composite score
-                'exploration_efficiency': exploration_efficiency * 100,  # Raw efficiency percentage
-                'path_nodes': path_nodes,  # Include path for animation
-                'total_walkable': total_walkable  # For transparency in defense
+                'search_efficiency': search_effectiveness_score,
+                'exploration_efficiency': exploration_efficiency * 100,
+                'path_nodes': path_nodes,
+                'total_walkable': total_walkable
             }
             return metrics
 
         for neighbor in current.neighbors:
+            # diagonal moves cost more (sqrt 2)
             is_diagonal = abs(neighbor.row - current.row) + abs(neighbor.col - current.col) == 2
             move_cost = math.sqrt(2) if is_diagonal else 1
             temp_g_score = g_score[current] + (move_cost * neighbor.weight)
@@ -486,7 +465,7 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
                 draw_node(canvas, current)
 
     elapsed_time = time.perf_counter() - start_time
-    # ADS2 Search Effectiveness Score (composite metric) - even for failed searches
+    # if no path found, still calculate score
     exploration_efficiency = ((total_walkable - nodes_explored) / total_walkable) if total_walkable > 0 else 0
     time_factor = max(0.5, min(1.0, 1.0 / (elapsed_time * 1000 + 1)))
     search_effectiveness_score = (exploration_efficiency * 50 + time_factor * 50)
@@ -497,7 +476,7 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
         'max_open_size': max_open_size,
         'time': elapsed_time,
         'space_complexity': len(closed_set),
-        'search_efficiency': search_effectiveness_score,  # Composite score
+        'search_efficiency': search_effectiveness_score,
         'exploration_efficiency': exploration_efficiency * 100,
         'total_walkable': total_walkable
     }
@@ -505,7 +484,7 @@ def algorithm(canvas, grid, start, end, allow_diagonal=False, robot_size=1,
 
 
 def make_grid(rows):
-    """Create the grid of nodes"""
+    # make the grid with all the nodes
     grid = []
     for i in range(rows):
         grid.append([])
@@ -516,7 +495,7 @@ def make_grid(rows):
 
 
 def draw_node(canvas, node):
-    """Draw a single node on canvas with rounded style"""
+    # draws individual node on canvas
     x = node.col * CELL_SIZE
     y = node.row * CELL_SIZE
     margin = 1
@@ -528,7 +507,7 @@ def draw_node(canvas, node):
     # Draw with slight padding for better appearance
     if node.is_weight():
         # Draw weighted terrain with visible semi-transparent overlay
-        # First draw a light base
+        # light base first
         canvas.create_rectangle(
             x + margin, y + margin,
             x + CELL_SIZE - margin, y + CELL_SIZE - margin,
@@ -540,7 +519,7 @@ def draw_node(canvas, node):
             x + CELL_SIZE - margin, y + CELL_SIZE - margin,
             fill=WEIGHT_COLOR, outline="", tags="cell", stipple="gray50"
         )
-        # Add border for better visibility
+        # border for visibility
         canvas.create_rectangle(
             x + margin, y + margin,
             x + CELL_SIZE - margin, y + CELL_SIZE - margin,
@@ -555,7 +534,7 @@ def draw_node(canvas, node):
 
 
 def draw_node_with_image(canvas, node, obstacle_photo=None):
-    """Draw a node, using custom image for barriers if available"""
+    # draws node but uses image for obstacles if we have one
     x = node.col * CELL_SIZE
     y = node.row * CELL_SIZE
     margin = 1
@@ -571,7 +550,7 @@ def draw_node_with_image(canvas, node, obstacle_photo=None):
 
 
 def draw_robot(canvas, row, col, size, color):
-    """Draw a cute robot icon at the specified position"""
+    # simple robot drawing with body, head, eyes
     x = col * CELL_SIZE
     y = row * CELL_SIZE
     center_x = x + (size * CELL_SIZE) / 2
@@ -623,7 +602,7 @@ def draw_robot(canvas, row, col, size, color):
 
 
 def draw_flag(canvas, row, col, color):
-    """Draw a goal flag icon"""
+    # goal flag
     x = col * CELL_SIZE + CELL_SIZE / 2
     y = row * CELL_SIZE + CELL_SIZE / 2
     flag_height = CELL_SIZE * 0.6
@@ -642,7 +621,7 @@ def draw_flag(canvas, row, col, color):
 
 
 def draw_grid(canvas, theme_key="rabbit"):
-    """Redraw entire grid with theme colors"""
+    # redraws entire grid based on current theme
     theme = THEME_CONFIG.get(theme_key, THEME_CONFIG["rabbit"])
     canvas.delete("all")
     
