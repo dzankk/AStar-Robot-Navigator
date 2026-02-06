@@ -1,14 +1,11 @@
-"""
-Professional Theme Manager for A* Pathfinding Visualization
-Handles theme switching with algorithm-specific behaviors
-"""
+# Theme Manager - handles different visual themes and robot configs
 
 import os
 from pathlib import Path
 from PIL import Image
 
 class ThemeConfig:
-    """Configuration for a single theme with algorithm parameters"""
+    # stores all the settings for one theme
     def __init__(self, name, description, robot_size, allow_weights, weight_value, 
                  background, path_color, open_color, closed_color, weight_color,
                  robot_image=None, obstacle_image=None, goal_image=None):
@@ -34,7 +31,7 @@ class ThemeConfig:
 
 
 class ThemeManager:
-    """Manages themes and their assets with algorithm-specific behaviors"""
+    # manages all themes and loads their images
     
     def __init__(self, assets_dir):
         self.assets_dir = Path(assets_dir)
@@ -42,10 +39,10 @@ class ThemeManager:
         self.themes = self._initialize_themes()
         
     def _initialize_themes(self):
-        """Initialize all theme configurations"""
+        # setup all three themes
         themes = {}
         
-        # Theme 1: Carrot Hunt - Standard A* (1x1, uniform cost)
+        # Theme 1: rabbit theme - 1x1 robot
         themes['rabbit'] = ThemeConfig(
             name="Carrot Hunt",
             description="Standard A* with 1×1 point robot, uniform cost=1",
@@ -62,7 +59,7 @@ class ThemeManager:
             goal_image=self.assets_dir / "rabbit" / "goal.png"
         )
         
-        # Theme 2: Dungeon Escape - Square Robot (2x2 footprint)
+        # Theme 2: space theme - 2x2 robot
         themes['space'] = ThemeConfig(
             name="Dungeon Escape",
             description="2×2 footprint robot - all 4 cells must be clear",
@@ -79,7 +76,7 @@ class ThemeManager:
             goal_image=self.assets_dir / "space" / "goal.png"
         )
         
-        # Theme 3: Obstacle Course - Weighted Terrain (high cost zones)
+        # Theme 3: escape theme - 3x3 robot with weighted terrain
         themes['escape'] = ThemeConfig(
             name="Obstacle Course",
             description="Large square robot - 3×3 footprint validation with weighted terrain",
@@ -99,11 +96,10 @@ class ThemeManager:
         return themes
     
     def get_theme(self, theme_key):
-        """Get theme configuration by key"""
         return self.themes.get(theme_key)
     
     def load_assets(self, theme_key, cell_size, robot_size_override=None):
-        """Load and resize image assets for a theme"""
+        # loads and resizes images for the theme
         theme = self.themes.get(theme_key)
         if not theme:
             return None, None, None
@@ -111,7 +107,7 @@ class ThemeManager:
         robot_size = robot_size_override or theme.robot_size
         assets = {}
         
-        # Load robot image
+        # robot image
         if theme.robot_image and theme.robot_image.exists():
             try:
                 img = Image.open(theme.robot_image)
@@ -124,7 +120,7 @@ class ThemeManager:
         else:
             assets['robot'] = None
         
-        # Load obstacle image
+        # obstacle image
         if theme.obstacle_image and theme.obstacle_image.exists():
             try:
                 img = Image.open(theme.obstacle_image)
@@ -137,7 +133,7 @@ class ThemeManager:
         else:
             assets['obstacle'] = None
         
-        # Load goal image
+        # goal image
         if theme.goal_image and theme.goal_image.exists():
             try:
                 img = Image.open(theme.goal_image)
@@ -153,10 +149,8 @@ class ThemeManager:
         return assets.get('robot'), assets.get('obstacle'), assets.get('goal')
     
     def get_theme_names(self):
-        """Get list of theme keys"""
         return list(self.themes.keys())
     
     def get_theme_display_name(self, theme_key):
-        """Get display name for theme"""
         theme = self.themes.get(theme_key)
         return theme.name if theme else "Unknown"
