@@ -14,17 +14,12 @@ Place PNG files in this directory:
 
 1. **robot.png** (128x128)
    - A prisoner/escapee character
-   - Should have a recognizable escape/movement pose
-   - Suggestion: Orange prison clothing, scared expression
 
 2. **obstacle.png** (64x64)
    - Prison walls or stone barriers
-   - Can be a dark grey/black texture
-   - Suggestion: Stone wall pattern or prison cell bars
 
 3. **goal.png** (64x64)
-   - Freedom/exit symbol
-   - Suggestion: Door, exit sign, freedom symbol, or light
+   - Freedom/exit symbol- door
 
 ## Gameplay
 - Click to place the START (escapee position)
@@ -37,3 +32,4 @@ Place PNG files in this directory:
 
 ## Story Context
 "A prisoner must escape the dungeon by finding a path to freedom while avoiding areas monitored by heavy guard presence. The guards patrol high-security zones (shown in red), making those routes much more dangerous. The algorithm will seek the safest escape route, preferring longer paths through unguarded areas over risky passages through guard zones."
+
