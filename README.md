@@ -268,7 +268,6 @@ This project demonstrates:
 
 ##  Author
 **Student:** Džana Kopić 
-**Index:** 20165 
 **Course:** Algorithms and Data Structures II (ADS2)  
 **Institution:** Faculty of Electrical Engineering (ETF Sarajevo)
 
