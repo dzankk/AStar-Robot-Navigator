@@ -73,6 +73,7 @@ python astar_pathfinding_tk.py
 - Cannot squeeze through tight gaps
 - Requires 2×2 or 3×3 clear space
 
+
 **Footprint Validation:**
 ```python
 for dr in range(robot_size):
@@ -92,6 +93,9 @@ The comparison table tracks:
 5. **Peak Priority Queue** - Memory usage (cells in queue at peak)
 6. **Space Complexity** - Nodes in closed set
 7. **ADS2 Efficiency%** - (Total_Walkable - Explored) / Total_Walkable × 100
+
+<img width="288" height="373" alt="image" src="https://github.com/user-attachments/assets/6c7d3c72-2980-47cb-a123-c8ba1c029cc2" />
+
 
 **Color Coding:**
 - 🟢 Green ↓ = Better (less cost)
@@ -127,7 +131,7 @@ PathPlanning_Projekat/
 
 ##  Themes
 
-Rabbit Theme 🐰: Designed for simple grid visualization.
+Rabbit Theme 🐰: 
 
     Robot: Pixel Rabbit sprite.
 
@@ -135,25 +139,27 @@ Rabbit Theme 🐰: Designed for simple grid visualization.
 
     Obstacles: Shrubs.
 <img width="1138" height="863" alt="image" src="https://github.com/user-attachments/assets/7b6ac49a-8c95-4b12-8540-efc44ecc301a" />
+---
 
-Space Theme 🚀: High-contrast mode for clear path visibility.
+Space Theme 🚀:
 
     Robot: Spaceship.
 
     Goal: SThe earth.
 
     Obstacles: Asteroids.
-    <img width="1143" height="842" alt="image" src="https://github.com/user-attachments/assets/f7ef521e-1a4b-45df-80b9-659676341e1d" />
+<img width="1143" height="842" alt="image" src="https://github.com/user-attachments/assets/f7ef521e-1a4b-45df-80b9-659676341e1d" />
 
-
-Dungeon Escape 🔐: Focuses on weighted terrain visualization.
+---
+Dungeon Escape 🔐: 
 
     Robot: Prisoner/Escapee.
 
     Goal: Exit Door.
 
     Obstacles: Prison bars.
-<img width="1143" height="881" alt="image" src="https://github.com/user-attachments/assets/21e4aa96-0a51-4e7b-9044-cd74ea52a099" />
+<img width="1167" height="878" alt="Screenshot 2026-02-06 080835" src="https://github.com/user-attachments/assets/aca5cdc6-49c7-4fa7-96f8-c564cc3198a5" />
+
 
 ---
 
@@ -171,6 +177,8 @@ Efficiency% = ((Total_Walkable_Cells - Nodes_Explored) / Total_Walkable_Cells) �
 - **Memory usage indicator** for the A* algorithm
 - Shows maximum size of the open set during search
 - Useful for understanding space complexity in practice
+- 
+<img width="290" height="178" alt="image" src="https://github.com/user-attachments/assets/9fcf778c-bcd9-405b-a851-71ec736ce9df" />
 
 ---
 
@@ -186,13 +194,22 @@ Efficiency% = ((Total_Walkable_Cells - Nodes_Explored) / Total_Walkable_Cells) �
 1. Enable "High-Cost Brush" checkbox
 2. Drag to paint weighted cells (appears as pink overlay)
 
+<img width="285" height="139" alt="image" src="https://github.com/user-attachments/assets/e6a5ffaf-0e86-4c0d-bef3-0aa2f62a84ef" />
+
+
 **Method 2: Ctrl+Drag**
 1. Hold Ctrl and drag on the grid
 2. Creates weighted terrain cells automatically
 
+<img width="1164" height="905" alt="image" src="https://github.com/user-attachments/assets/2c21f709-97b4-4de5-96e4-b9e1b8cffc68" />
+
+
 **Method 3: Random Weights**
 1. Click " Random Weights" button
 2. Automatically adds 10-20% weighted terrain
+
+<img width="1154" height="852" alt="image" src="https://github.com/user-attachments/assets/6aa41ee2-0187-49a6-8c2f-a0f895c9af42" />
+
 
 ### Visual Indicator
 - Pink semi-transparent overlay with red border
