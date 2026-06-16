@@ -134,6 +134,7 @@ Rabbit Theme 🐰: Designed for simple grid visualization.
     Goal: Carrot.
 
     Obstacles: Shrubs.
+<img width="1138" height="863" alt="image" src="https://github.com/user-attachments/assets/7b6ac49a-8c95-4b12-8540-efc44ecc301a" />
 
 Space Theme 🚀: High-contrast mode for clear path visibility.
 
@@ -142,6 +143,8 @@ Space Theme 🚀: High-contrast mode for clear path visibility.
     Goal: SThe earth.
 
     Obstacles: Asteroids.
+    <img width="1143" height="842" alt="image" src="https://github.com/user-attachments/assets/f7ef521e-1a4b-45df-80b9-659676341e1d" />
+
 
 Dungeon Escape 🔐: Focuses on weighted terrain visualization.
 
@@ -150,6 +153,7 @@ Dungeon Escape 🔐: Focuses on weighted terrain visualization.
     Goal: Exit Door.
 
     Obstacles: Prison bars.
+<img width="1143" height="881" alt="image" src="https://github.com/user-attachments/assets/21e4aa96-0a51-4e7b-9044-cd74ea52a099" />
 
 ---
 
